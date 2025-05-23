@@ -2,8 +2,8 @@
 
 AMI_ID="ami-09c813fb71547fc4f"
 SG_ID="sg-061c4e443b6a8969b"
-INSTANCES=("INSTANCES=("mysql" "mongodb" "cart "user" "redis" "catalogue" "rabbitmq" "payment"
- "shipping" "dispatch" "frontend")
+INSTANCES=("cart" "user" "mongodb" "mysql" "dispatch" "shipping" "frontend" "redis" "catalogue"
+"rabbitmq" "payment")
 
 ZONE_ID="Z010338424SHV40WHWYRG"
 DOMAIN_ID="bhargavcommerce.shop"
@@ -17,5 +17,5 @@ IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservation
 else
 IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PublicIpAddress' --output text) 
 fi 
-echo "$instance IP address is $IP"
 done
+echo "$instance ip address is $IP"
