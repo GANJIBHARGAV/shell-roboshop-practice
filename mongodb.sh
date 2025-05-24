@@ -17,9 +17,28 @@ fi
 VALIDATE(){
     if [ $1 -eq 0 ]
 then
-echo "$2 is installed... SUCCESS" | tee -a $LOG_FILE
+echo "$2 ... SUCCESS" | tee -a $LOG_FILE
 else
-echo "$2 is not installed... FAILED" | tee -a $LOG_FILE
+echo "$2 ... FAILED" | tee -a $LOG_FILE
 exit 1
 fi
 }
+
+cp mongo.repo vim /etc/yum.repos.d/mongo.repo
+VALIDATE $? "Copying mongodb repo"
+
+dnf install mongodb-org -y &>>$LOG_FILE
+VALIDATE $? "Mongodb installation" 
+
+systemctl enable mongod  &>>$LOG_FILE
+VALIDATE $? "Enable the mongodb " 
+
+systemctl start mongod  &>>$LOG_FILE
+VALIDATE $? "Starting mongodb" 
+# using stream editor to change the ip address from 127.0.0.1 to 0.0.0.0 by giving this command because
+#through vim editor we cant modify for programs s--> substitute g--> global
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf 
+VALIDATE $? "Editing mongodb configuration file for remote connection"
+systemctl restart mongod &>>$LOG_FILE
+VALIDATE $? "Restarting the mongodb"
+
