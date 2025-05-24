@@ -55,4 +55,15 @@ VALIDATE $? "enabling the catalogue"
 systemctl start catalogue &>>$LOG_FILE
 VALIDATE $? "starting the catalogue"
 
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
+VALIDATE $? "To have mongo client installed we have to setup MongoDB repo and install mongodb-client"
+
+dnf install mongodb-mongosh -y &>>$LOG_FILE
+VALIDATE $? "Installing mongodb client machine to connect to database"
+
+mongosh --host mongodb.bhargavcommerce.shop </app/db/master-data.js &>>$LOG_FILE
+VALIDATE $? "for loading the data into the tables or schema"
+
+
+
 
