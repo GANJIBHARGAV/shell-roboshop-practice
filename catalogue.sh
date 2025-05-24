@@ -22,6 +22,7 @@ then
 echo "$2 ... SUCCESS" | tee -a $LOG_FILE
 else
 echo "$2 ... FAILED" | tee -a $LOG_FILE
+exit 1
 fi
 }
 
