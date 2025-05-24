@@ -24,7 +24,7 @@ exit 1
 fi
 }
 
-cp mongo.repo vim /etc/yum.repos.d/mongo.repo
+cp mongo.repo vim /etc/yum.repos.d/mongodb.repo
 VALIDATE $? "Copying mongodb repo"
 
 dnf install mongodb-org -y &>>$LOG_FILE
