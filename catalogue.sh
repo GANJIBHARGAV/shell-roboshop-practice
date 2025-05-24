@@ -22,7 +22,6 @@ then
 echo "$2 ... SUCCESS" | tee -a $LOG_FILE
 else
 echo "$2 ... FAILED" | tee -a $LOG_FILE
-exit 1
 fi
 }
 
@@ -32,8 +31,8 @@ dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "Enabling the nodejs"
 dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "Installing the nodejs"
-#useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
-#VALIDATE $? "validating the system user"
+useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+VALIDATE $? "validating the system user"
 # creating the app directory
 mkdir /app
 VALIDATE $? "creating the app directory"
