@@ -26,11 +26,11 @@ exit 1
 fi
 }
 
-dnf module disable nodejs -y
-VALIDATE $? "Disabling the nodejs"
-dnf module enable nodejs:20 -y
+dnf module disable nodejs -y &>>$LOG_FILE
+VALIDATE $? "Disabling the nodejs" 
+dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "Enabling the nodejs"
-dnf install nodejs -y
+dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "Installing the nodejs"
 useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
 VALIDATE $? "validating the system user"
@@ -38,21 +38,21 @@ VALIDATE $? "validating the system user"
 mkdir /app
 VALIDATE $? "creating the app directory"
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE
 VALIDATE $? "downloading the catalogue code in zip mode"
 cd /app 
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip &>>$LOG_FILE
 VALIDATE $? "unzipping the code"
-npm install
+npm install &>>$LOG_FILE
 VALIDATE $? "Installing the node package manager"
 
 cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
-systemctl daemon-reload
+systemctl daemon-reload 
 VALIDATE $? "Daemon reload catalogue service"
 
-systemctl enable catalogue 
+systemctl enable catalogue &>>$LOG_FILE
 VALIDATE $? "enabling the catalogue"
-systemctl start catalogue
+systemctl start catalogue &>>$LOG_FILE
 VALIDATE $? "starting the catalogue"
 
 
