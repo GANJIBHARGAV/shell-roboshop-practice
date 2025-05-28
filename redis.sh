@@ -1,4 +1,5 @@
 #!/bin/bash
+STARTTIME=$(date +%s)
 userid=$(id -u)
 #roboshopid=$(id roboshop)
 LOGS_FOLDER="/var/log/roboshop-logs"
@@ -44,3 +45,7 @@ VALIDATE $? "Enable the redis"
 
 systemctl start redis
 VALIDATE $? "Start the redis" 
+
+ENDTIME=$(date +%s)
+TOTAL_TIME=$(($ENDTIME-$STARTTIME))
+echo "Script executed total time is $TOTAL_TIME seconds"
