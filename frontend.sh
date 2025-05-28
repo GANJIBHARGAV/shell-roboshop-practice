@@ -48,6 +48,9 @@ VALIDATE $? "Starting the nginx server"
 rm -rf /usr/share/nginx/html/* 
 validate $? "Removing the default html content"
 
+curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
+VALIDATE $? "Downloading the code"
+
 cd /usr/share/nginx/html &>>$LOG_FILE
 unzip /tmp/frontend.zip &>>$LOG_FILE
 VALIDATE $? "Unzipping the code"
