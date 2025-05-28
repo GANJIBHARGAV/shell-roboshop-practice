@@ -1,6 +1,5 @@
 #!/bin/bash
 userid=$(id -u)
-roboshopid=$(id roboshop)
 LOGS_FOLDER="/var/log/roboshop-logs"
 SCRIPT_FILE=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_FILE.log"
@@ -33,8 +32,8 @@ dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "Enabling the nodejs"
 dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "Installing the nodejs"
-
-if [ $roboshopid -ne 0 ]
+id roboshop
+if [ $? -ne 0 ]
 then
 useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
 VALIDATE $? "creating the system user"
@@ -72,8 +71,16 @@ VALIDATE $? "To have mongo client installed we have to setup MongoDB repo and in
 dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "Installing mongodb client machine to connect to database"
 
-mongosh --host mongodb.bhargavcommerce.shop </app/db/master-data.js &>>$LOG_FILE
+
 VALIDATE $? "for loading the data into the tables or schema"
+
+STATUS=$(mongosh --host mongodb.bhargavcommerce.shop --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+if [ STATUS -lt 0 ]
+then 
+mongosh --host mongodb.bhargavcommerce.shop </app/db/master-data.js &>>$LOG_FILE
+else
+echo "Data already loaded"
+fi
 
 
 
