@@ -45,7 +45,7 @@ VALIDATE $? "Enabling the nginx server"
 systemctl start nginx 
 VALIDATE $? "Starting the nginx server"
 
-rm -rf /usr/share/nginx/html/* 
+rm -rf /usr/share/nginx/html/* &>>$LOG_FILE
 VALIDATE $? "Removing the default html content"
 
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
