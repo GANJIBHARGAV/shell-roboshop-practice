@@ -35,10 +35,12 @@ VALIDATE $? "Installing the nodejs"
 
 id roboshop
 if [ $? -ne 0 ]
+then
 useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
 VALIDATE $? "creating the system user"
 else
 echo "System user already created... skipping"
+fi
 
 # creating the app directory 
 # -p ignores the failure if the directory already created
