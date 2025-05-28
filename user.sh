@@ -1,4 +1,5 @@
 #!/bin/bash
+STARTTIME=$(date +%s)
 userid=$(id -u)
 roboshopid=$(id roboshop)
 LOGS_FOLDER="/var/log/roboshop-logs"
