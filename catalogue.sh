@@ -41,8 +41,9 @@ VALIDATE $? "creating the system user"
 else
 echo "System user already created... skipping"
 
-# creating the app directory
-mkdir /app
+# creating the app directory 
+# -p ignores the failure if the directory already created
+mkdir -p /app
 VALIDATE $? "creating the app directory"
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE
