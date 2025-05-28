@@ -46,7 +46,7 @@ systemctl start nginx
 VALIDATE $? "Starting the nginx server"
 
 rm -rf /usr/share/nginx/html/* 
-validate $? "Removing the default html content"
+VALIDATE $? "Removing the default html content"
 
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
 VALIDATE $? "Downloading the code"
