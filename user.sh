@@ -57,7 +57,7 @@ VALIDATE $? "unzipping the code"
 npm install &>>$LOG_FILE
 VALIDATE $? "Installing the node package manager"
 
-cp $SCRIPT_DIR/user.service /etc/systemd/system/service.service
+cp $SCRIPT_DIR/user.service /etc/systemd/system/user.service
 systemctl daemon-reload 
 VALIDATE $? "Daemon reload user service"
 
@@ -66,22 +66,11 @@ VALIDATE $? "enabling the user"
 systemctl start user &>>$LOG_FILE
 VALIDATE $? "starting the user"
 
-cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
-VALIDATE $? "To have mongo client installed we have to setup MongoDB repo and install mongodb-client"
-
-dnf install mongodb-mongosh -y &>>$LOG_FILE
-VALIDATE $? "Installing mongodb client machine to connect to database"
+ENDTIME=$(date +%s)
+TOTAL_TIME=$(($ENDTIME-$STARTTIME))
+echo "Scripted completed within $TOTAL_TIME seconds"
 
 
-VALIDATE $? "for loading the data into the tables or schema"
-
-STATUS=$(mongosh --host mongodb.bhargavcommerce.shop --eval 'db.getMongo().getDBNames().indexOf("user")')
-if [ STATUS -lt 0 ]
-then 
-mongosh --host mongodb.bhargavcommerce.shop </app/db/master-data.js &>>$LOG_FILE
-else
-echo "Data already loaded"
-fi
 
 
 
