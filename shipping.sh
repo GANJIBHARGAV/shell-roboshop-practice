@@ -72,7 +72,7 @@ VALIDATE $? "starting the shipping"
 
 dnf install mysql -y &>>$LOG_FILE
 VALIDATE $? "Installing mysql"
-mysql -h mysql.bhargavcommerce.shop -u root p$MY_ROOT_PASSWORD -e 'use cities'
+mysql -h mysql.bhargavcommerce.shop -u root -p$MY_ROOT_PASSWORD -e 'use cities'
 if [ $? -ne 0 ]
 then
 mysql -h mysql.bhargavcommerce.shop -uroot -p$MY_ROOT_PASSWORD < /app/db/schema.sql &>>$LOG_FILE
