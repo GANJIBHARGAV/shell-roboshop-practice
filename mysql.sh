@@ -15,8 +15,6 @@ else
 echo "Super.. under the root user only" | tee -a $LOG_FILE
 fi
 
-echo "Please enter root password"
-read -s  MY_ROOT_PASSWORD
 # validate function is used to take input1 as exit status and input2 as server as $1 ans $2
 VALIDATE(){
 if [ $1 -eq 0 ]
@@ -37,7 +35,7 @@ VALIDATE $? "enabling the mysql"
 systemctl start mysqld    &>>$LOG_FILE
 VALIDATE $? "starting the mysql"
 
-mysql_secure_installation --set-root-pass $MY_ROOT_PASSWORD   &>>$LOG_FILE
+mysql_secure_installation --set-root-pass RoboShop@1   &>>$LOG_FILE
 VALIDATE "Setting up mysql password"
 
 ENDTIME=$(date +%s)
