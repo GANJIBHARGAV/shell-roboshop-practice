@@ -81,6 +81,7 @@ mysql -h mysql.bhargavcommerce.shop -uroot -p$MY_ROOT_PASSWORD < /app/db/master-
 VALIDATE $? "Loading the data into tables"
 else
 echo "Already data loaded into the tables"
+fi
 
 systemctl restart shipping
 VALIDATE $? "Restarting the shipping "
