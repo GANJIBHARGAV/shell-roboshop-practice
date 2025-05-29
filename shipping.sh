@@ -55,9 +55,11 @@ unzip /tmp/shipping.zip &>>$LOG_FILE
 VALIDATE $? "unzipping the code"
 
 mvn clean package &>>$LOG_FILE &>>$LOG_FILE
+VALIDATE $? "Instaling the maven package"
 mv target/shipping-1.0.jar shipping.jar &>>$LOG_FILE
+VALIDATE $? "Moving the target jar files"
 
-cp shipping.service /etc/systemd/system/shipping.service &>>$LOG_FILE
+cp $SCRIPT_DIR/shipping.service /etc/systemd/system/shipping.service &>>$LOG_FILE
 VALIDATE $? "Copying the shipping service to etc file"
 
 systemctl daemon-reload &>>$LOG_FILE
