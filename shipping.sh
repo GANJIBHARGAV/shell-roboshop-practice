@@ -54,12 +54,12 @@ cd /app
 unzip /tmp/shipping.zip &>>$LOG_FILE
 VALIDATE $? "unzipping the code"
 
-mvn clean package &>>$LOG_FILE
+mvn clean package &>>$LOG_FILE &>>$LOG_FILE
 mv target/shipping-1.0.jar shipping.jar &>>$LOG_FILE
 
-cp shipping.service /etc/systemd/system/shipping.service
+cp shipping.service /etc/systemd/system/shipping.service &>>$LOG_FILE
 
-systemctl daemon-reload 
+systemctl daemon-reload &>>$LOG_FILE
 VALIDATE $? "Daemon reload shipping service"
 
 systemctl enable shipping &>>$LOG_FILE
