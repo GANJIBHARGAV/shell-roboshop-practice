@@ -17,6 +17,7 @@ fi
 
 echo "Please enter rabbitmq password to setup"
 read -s RABBITMQ_PASSWORD
+
 # validate function is used to take input1 as exit status and input2 as server as $1 ans $2
 VALIDATE(){
     if [ $1 -eq 0 ]
@@ -39,7 +40,7 @@ VALIDATE $? "Enable the rabbitmq"
 systemctl start rabbitmq-server &>>$LOG_FILE
 VALIDATE $? "Start the rabbitmq"
 
-rabbitmqctl add_user roboshop $RABBITMQ_PASSWORD &>>$LOG_FILE
-VALIDATE $? "Seeting up rabbitmq user"
-rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>$LOG_FILE
+rabbitmqctl add_user roboshop $RABBITMQ_PASSWORD  &>>$LOG_FILE
+VALIDATE $? "Setting up rabbitmq user"
+rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"  &>>$LOG_FILE
 VALIDATE $? "seeting permissions for roboshop"
