@@ -70,12 +70,13 @@ VALIDATE $? "enabling the shipping"
 systemctl start shipping &>>$LOG_FILE
 VALIDATE $? "starting the shipping"
 
-dnf install mysql -y
+dnf install mysql -y &>>$LOG_FILE
 VALIDATE $? "Installing mysql"
 
 mysql -h mysql.bhargavcommerce.shop -uroot -p$MY_ROOT_PASSWORD < /app/db/schema.sql &>>$LOG_FILE
 mysql -h mysql.bhargavcommerce.shop -uroot -p$MY_ROOT_PASSWORD < /app/db/app-user.sql &>>$LOG_FILE
 mysql -h mysql.bhargavcommerce.shop -uroot -p$MY_ROOT_PASSWORD < /app/db/master-data.sql &>>$LOG_FILE
+VALIDATE $? "Loading the data into tables"
 
 systemctl restart shipping
 VALIDATE $? "Restarting the shipping "
