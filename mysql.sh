@@ -19,7 +19,7 @@ echo "Please enter root password"
 read -s  MY_ROOT_PASSWORD
 # validate function is used to take input1 as exit status and input2 as server as $1 ans $2
 VALIDATE(){
-    if [ $1 -eq 0 ]
+if [ $1 -eq 0 ]
 then
 echo "$2 ... SUCCESS" | tee -a $LOG_FILE
 else
