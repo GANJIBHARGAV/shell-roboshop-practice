@@ -54,25 +54,25 @@ cd /app
 unzip /tmp/shipping.zip &>>$LOG_FILE
 VALIDATE $? "unzipping the code"
 
-mvn clean package 
-mv target/shipping-1.0.jar shipping.jar
+mvn clean package &>>$LOG_FILE
+mv target/shipping-1.0.jar shipping.jar &>>$LOG_FILE
 
 cp shipping.service /etc/systemd/system/shipping.service
 
 systemctl daemon-reload 
-VALIDATE $? "Daemon reload cart service"
+VALIDATE $? "Daemon reload shipping service"
 
-systemctl enable cart &>>$LOG_FILE
-VALIDATE $? "enabling the cart"
-systemctl start cart &>>$LOG_FILE
-VALIDATE $? "starting the cart"
+systemctl enable shipping &>>$LOG_FILE
+VALIDATE $? "enabling the shipping"
+systemctl start shipping &>>$LOG_FILE
+VALIDATE $? "starting the shipping"
 
 dnf install mysql -y
 VALIDATE $? "Installing mysql"
 
-mysql -h mysql.bhargavcommerce.shop -uroot -p$MY_ROOT_PASSWORD < /app/db/schema.sql
-mysql -h mysql.bhargavcommerce.shop -uroot -p$MY_ROOT_PASSWORD < /app/db/app-user.sql 
-mysql -h mysql.bhargavcommerce.shop -uroot -p$MY_ROOT_PASSWORD < /app/db/master-data.sql
+mysql -h mysql.bhargavcommerce.shop -uroot -p$MY_ROOT_PASSWORD < /app/db/schema.sql &>>$LOG_FILE
+mysql -h mysql.bhargavcommerce.shop -uroot -p$MY_ROOT_PASSWORD < /app/db/app-user.sql &>>$LOG_FILE
+mysql -h mysql.bhargavcommerce.shop -uroot -p$MY_ROOT_PASSWORD < /app/db/master-data.sql &>>$LOG_FILE
 
 systemctl restart shipping
 VALIDATE $? "Restarting the shipping "
