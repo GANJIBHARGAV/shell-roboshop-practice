@@ -1,4 +1,5 @@
 #!/bin/bash
+STARTTIME=$(date +%s)
 userid=$(id -u)
 LOGS_FOLDER="/var/log/roboshop-logs"
 SCRIPT_FILE=$(echo $0 | cut -d "." -f1)
@@ -41,4 +42,6 @@ sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
 VALIDATE $? "Editing mongodb configuration file for remote connection"
 systemctl restart mongod &>>$LOG_FILE
 VALIDATE $? "Restarting the mongodb"
+
+ENDTIME
 
