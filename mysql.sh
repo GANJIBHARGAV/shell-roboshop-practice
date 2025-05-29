@@ -39,3 +39,7 @@ VALIDATE $? "starting the user"
 
 mysql_secure_installation --set-root-pass $MY_ROOT_PASSWORD &>>$LOG_FILE
 VALIDATE "Setting up mysql password"
+
+ENDTIME=$(date +%s)
+TOTAL_TIME=$(($ENDTIME-$STARTTIME))
+echo "Script ended within $TOTAL_TIME seconds"
