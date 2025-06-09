@@ -14,8 +14,10 @@ INSTANCE_ID=$(aws ec2 run-instances --image-id ami-09c813fb71547fc4f --instance-
 if [ instance != "frontend" ]
 then
 IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PrivateIpAddress' --output text)
+RECORD_NAME="$instance.$DOMAIN_ID"
 else
 IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PublicIpAddress' --output text) 
+RECORD_NAME="$DOMAIN_ID"
 fi 
 echo "$instance ip address is : $IP"
 
@@ -27,7 +29,7 @@ aws route53 change-resource-record-sets \
     ,"Changes": [{
       "Action"              : "UPSERT"
       ,"ResourceRecordSet"  : {
-        "Name"              : "'$instance'.'$DOMAIN_ID'"
+        "Name"              : "'$RECORD_NAME'"
         ,"Type"             : "A"
         ,"TTL"              : 1
         ,"ResourceRecords"  : [{
